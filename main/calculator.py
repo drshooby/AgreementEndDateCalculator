@@ -1,14 +1,14 @@
-from datetime import datetime, timedelta
+import pendulum
 
 # calendar type - quarter
 # date - input agreement date
 def closest_agreement_end_date(calendar_type, date):
 
     quarter_end_dates = [
-        "March 31",
-        "June 30",
-        "September 30",
-        "December 31"
+        "03-31",
+        "06-30",
+        "09-30",
+        "12-31"
     ]
 
     date_types = {
@@ -18,9 +18,9 @@ def closest_agreement_end_date(calendar_type, date):
     current_year = date.year
 
     formatted_dates = [
-        datetime.strptime(f"{date} {current_year}", "%B %d %Y") for date in date_types[calendar_type]
+        pendulum.parse(f"{current_year}-{d}") for d in date_types[calendar_type]
     ] + [
-        datetime.strptime(f"{date} {current_year - 1}", "%B %d %Y") for date in date_types[calendar_type]
+        pendulum.parse(f"{current_year - 1}-{d}") for d in date_types[calendar_type]
     ]
 
     nearest_end_date = None
@@ -38,18 +38,17 @@ def closest_agreement_end_date(calendar_type, date):
 
 # end_date - closest quarter-end date
 # days - days after end_date
-def add_date(end_date, requirement_days):
-    return end_date + timedelta(days=requirement_days)
+def add_date(end_date, days):
+    return end_date.add(days=days)
 
 
 def generate_date_ranges(calendar_type, start_date, days_until_end, requirement_days):
-
     if requirement_days <= 0:
-        return None, None
+        return [], []
 
     end_date = add_date(start_date, days_until_end)
 
-    requirements = [] # list of date ranges
+    requirements = []  # list of date ranges
 
     req_date = closest_agreement_end_date(calendar_type, start_date)
 
@@ -66,8 +65,7 @@ def generate_date_ranges(calendar_type, start_date, days_until_end, requirement_
 
 
 if __name__ == "__main__":
-    date_format = "%Y-%m-%d"  # Define the format (YYYY-MM-DD)
-    date1 = datetime.strptime("2024-06-15", date_format)
+    date1 = pendulum.parse("2024-06-15")
 
     single_range, all_ranges = generate_date_ranges("quarter", date1, 365, 20)
 
