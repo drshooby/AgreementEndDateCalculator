@@ -1,10 +1,10 @@
 import unittest
-from main.calculator import closest_agreement_date
+from main.calculator import closest_agreement_end_date
 from datetime import *
 
 class TestCalulator(unittest.TestCase):
 
-    def test_closest_agreement_date(self):
+    def test_closest_agreement_end_date(self):
 
         date_str1 = "2024-10-14"
         date_str2 = "2024-12-31"
@@ -17,13 +17,13 @@ class TestCalulator(unittest.TestCase):
         date3 = datetime.strptime(date_str3, date_format)
 
         # test between 3rd and 4th quarter
-        r1 = closest_agreement_date("quarter", date1)
-        self.assertEqual(r1, "2024-12-31")
+        r1 = closest_agreement_end_date("quarter", date1)
+        self.assertEqual(r1, datetime(2024, 12, 31, 0, 0))
 
         # test input date is a quarter end date
-        r2 = closest_agreement_date("quarter", date2)
-        self.assertEqual(r2, "2024-12-31")
+        r2 = closest_agreement_end_date("quarter", date2)
+        self.assertEqual(r2, datetime(2024, 12, 31, 0, 0))
 
         # test between 1st and 2nd quarter
-        r3 = closest_agreement_date("quarter", date3)
-        self.assertEqual(r3, "2025-03-31")
+        r3 = closest_agreement_end_date("quarter", date3)
+        self.assertEqual(r3, datetime(2025, 3, 31, 0, 0))
