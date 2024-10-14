@@ -42,11 +42,9 @@ def add_date(end_date, days):
     return end_date.add(days=days)
 
 
-def generate_date_ranges(calendar_type, start_date, days_until_end, requirement_days):
+def generate_date_ranges(calendar_type, start_date, end_date, requirement_days):
     if requirement_days <= 0:
         return [], []
-
-    end_date = add_date(start_date, days_until_end)
 
     requirements = []  # list of date ranges
 
@@ -62,18 +60,3 @@ def generate_date_ranges(calendar_type, start_date, days_until_end, requirement_
         requirements.pop()
 
     return requirements[:1], requirements
-
-
-if __name__ == "__main__":
-    date1 = pendulum.parse("2024-06-15")
-
-    single_range, all_ranges = generate_date_ranges("quarter", date1, 365, 20)
-
-    print(single_range)
-
-    for date in all_ranges:
-        print(date)
-    
-
-
-
