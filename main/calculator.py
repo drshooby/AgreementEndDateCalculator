@@ -38,19 +38,44 @@ def closest_agreement_end_date(calendar_type, date):
 
 # end_date - closest quarter-end date
 # days - days after end_date
-def future_date(end_date, days_to_add):
-    return end_date + timedelta(days=days_to_add)
+def add_date(end_date, requirement_days):
+    return end_date + timedelta(days=requirement_days)
+
+
+def generate_date_ranges(calendar_type, start_date, days_until_end, requirement_days):
+
+    if requirement_days <= 0:
+        return None, None
+
+    end_date = add_date(start_date, days_until_end)
+
+    requirements = [] # list of date ranges
+
+    req_date = closest_agreement_end_date(calendar_type, start_date)
+
+    while req_date < end_date:
+        lo = req_date
+        hi = add_date(req_date, requirement_days)
+        requirements.append((lo, hi))
+        req_date = closest_agreement_end_date(calendar_type, add_date(hi, 1))
+
+    if requirements[-1][1] > end_date:
+        requirements.pop()
+
+    return requirements[:1], requirements
+
 
 if __name__ == "__main__":
     date_format = "%Y-%m-%d"  # Define the format (YYYY-MM-DD)
-    date1 = datetime.strptime("2024-10-14", date_format)
-    r1 = closest_agreement_end_date("quarter", date1)
-    print("End quarter date based on agreement date:", r1)
-    print("added 15 days", future_date(r1, 15))
+    date1 = datetime.strptime("2024-06-15", date_format)
 
-    date2 = datetime.strptime("2024-12-31", date_format)
-    print("End quarter date based on agreement date:", closest_agreement_end_date("quarter", date2))
+    single_range, all_ranges = generate_date_ranges("quarter", date1, 365, 20)
 
-    date3 = datetime.strptime("2025-02-20", date_format)
-    print("End quarter date based on agreement date:", closest_agreement_end_date("quarter", date3))
+    print(single_range)
+
+    for date in all_ranges:
+        print(date)
+    
+
+
 

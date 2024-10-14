@@ -1,5 +1,5 @@
 import unittest
-from main.calculator import closest_agreement_end_date
+from main.calculator import closest_agreement_end_date, generate_date_ranges
 from datetime import *
 
 class TestCalulator(unittest.TestCase):
@@ -27,3 +27,23 @@ class TestCalulator(unittest.TestCase):
         # test between 1st and 2nd quarter
         r3 = closest_agreement_end_date("quarter", date3)
         self.assertEqual(r3, datetime(2025, 3, 31, 0, 0))
+
+    def test_generate_date_ranges(self):
+
+        date_str1 = "2024-06-15"
+        
+        date_format = "%Y-%m-%d"
+        date1 = datetime.strptime(date_str1, date_format)
+
+        req_date = 20
+        ONE_YEAR = 365
+
+        single_range, all_ranges = generate_date_ranges("quarter", date1, ONE_YEAR, req_date)
+
+        self.assertEqual(single_range, [(datetime(2024, 6, 30, 0, 0), datetime(2024, 7, 20, 0, 0))])
+        self.assertEqual(all_ranges,
+            [   (datetime(2024, 6, 30, 0, 0), datetime(2024, 7, 20, 0, 0)),
+                (datetime(2024, 9, 30, 0, 0), datetime(2024, 10, 20, 0, 0)),
+                (datetime(2024, 12, 31, 0, 0), datetime(2025, 1, 20, 0, 0)),
+                (datetime(2025, 3, 31, 0, 0), datetime(2025, 4, 20, 0, 0))    ]
+        )
