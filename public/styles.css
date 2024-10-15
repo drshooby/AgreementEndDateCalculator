@@ -1,0 +1,126 @@
+body {
+    font-family: "DM Sans", sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    background: linear-gradient(to right, #6854ec, #ab88eb);
+    color: white;
+}
+
+input {
+    margin: 5px 0;
+    padding: 10px;
+    width: 200px;
+}
+
+button {
+    padding: 10px 15px;
+    margin-top: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: white
+}
+
+a:visited {
+    color: white;
+}
+
+#main-body {
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#calendarType {
+    width: 120px;
+    height: 30px;
+    font-size: 20px;
+    border-radius: 20px;
+}
+
+.results {
+    margin-top: 20px;
+}
+
+#calculateBtn {
+    border-radius: 20px;
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    transition: ease-in-out 200ms;
+}
+
+#calculateBtn:hover {
+    background-color: #9183ec;
+    color: white;
+}
+
+#downloadBtn {
+    border-radius: 20px;
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    transition: ease-in-out 200ms;
+}
+
+#downloadBtn:hover {
+    background-color: #9183ec;
+    color: white;
+}
+
+#startDate {
+    border-radius: 20px;
+    font-size: 20px;
+    transition: ease-in-out 150ms;
+    border-color: #7d6bee;
+}
+
+#startDate:focus {
+    border-width: 5px;
+}
+
+#endDate {
+    border-radius: 20px;
+    font-size: 20px;
+    transition: ease-in-out 150ms;
+    border-color: #7d6bee;
+}
+
+#endDate:focus {
+    border-width: 5px;
+}
+
+#requirementDays {
+    border-radius: 20px;
+    font-size: 20px;
+    transition: ease-in-out 150ms;
+    border-color: #aca0f7;
+}
+
+#requirementDays:focus {
+    border-width: 5px;
+}
+
+#results-container {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-height: 15vh;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#results {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    word-wrap: break-word;
+    white-space: normal;
+}
